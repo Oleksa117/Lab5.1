@@ -62,6 +62,22 @@
 
         </Border>
 
+        <DataGrid Grid.Row="1"
+          Grid.ColumnSpan="2"
+          Margin="10"
+          AutoGenerateColumns="False">
+
+            <DataGrid.Columns>
+
+                <DataGridTextColumn Header="Позиція"/>
+                <DataGridTextColumn Header="Ім'я"/>
+                <DataGridTextColumn Header="X"/>
+                <DataGridTextColumn Header="Час"/>
+
+            </DataGrid.Columns>
+
+        </DataGrid>
+
     </Grid>
     
 </Window>
