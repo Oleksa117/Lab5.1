@@ -56,8 +56,6 @@ namespace Laba5._1
             Horses.Clear();
             RaceCanvas.Children.Clear();
 
-            Brush[] colors = { Brushes.Red, Brushes.Blue, Brushes.Yellow, Brushes.Black, Brushes.Purple, Brushes.Orange, Brushes.Pink, Brushes.Brown };
-
             // Отримуємо доступну висоту
             double availableHeight = RaceCanvas.ActualHeight;
             if (availableHeight <= 0)
@@ -90,7 +88,7 @@ namespace Laba5._1
 
             for (int i = 0; i < count; i++)
             {
-                Horse horse = new Horse($"Horse {i + 1}", colors[i]);
+                Horse horse = new Horse($"Horse {i + 1}", Brushes.Gray);
 
                 Horses.Add(horse);
 

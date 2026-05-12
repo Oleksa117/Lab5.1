@@ -59,8 +59,6 @@ namespace Laba5._1
         public Horse(string name, Brush color)
         {
             Name = name;
-            Color = color;
-
             Speed = random.Next(5, 11);
             Coefficient = Math.Round(1 + random.NextDouble() * 4, 2);
         }
