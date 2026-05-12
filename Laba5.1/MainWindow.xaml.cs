@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Linq;
+using System.Windows.Shapes;
 
 namespace Laba5._1
 {
@@ -43,6 +44,20 @@ namespace Laba5._1
                 Horse horse = new Horse($"Horse {i + 1}", colors[i]);
 
                 Horses.Add(horse);
+
+                // прямокутник який представляє коня
+                Rectangle rect = new Rectangle
+                {
+                    Width = 40,
+                    Height = 40,
+                    Fill = horse.Color
+                };
+
+                // позиція коня на трасі
+                Canvas.SetLeft(rect, 0);
+                Canvas.SetTop(rect, 50 + i * 60);
+
+                RaceCanvas.Children.Add(rect);
             }
         }
 
