@@ -166,6 +166,26 @@ namespace Laba5._1
                     ordered[i].Position = i + 1;
                 }
 
+                var winner = Horses
+                            .OrderBy(h => h.FinishTime)
+                            .FirstOrDefault();
+
+                if (winner != null && winner.FinishTime != TimeSpan.Zero)
+                {
+                    if (winner.Bet > 0)
+                    {
+                        double winMoney = winner.Bet * winner.Coefficient;
+
+                        balance += winMoney;
+
+                        BalanceText.Text = balance.ToString("0.00");
+
+                        MessageBox.Show( $"{winner.Name} переміг!\nВиграш: {winMoney:0.00}");
+                    }
+
+                    break;
+                }
+
                 await Task.Delay(50);
             }
         }
