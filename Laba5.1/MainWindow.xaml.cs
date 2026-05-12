@@ -30,9 +30,9 @@ namespace Laba5._1
 
             for (int i = 0; i < 12; i++)
             {
-                string uri =$"pack://application:,,,/Images/Horses/WithOutBorder_{i:0000}.png";
+                string uri = $"pack://application:,,,/Images/Horses/WithOutBorder_{i:0000}.png";
 
-                BitmapImage bitmap =new BitmapImage(new Uri(uri));
+                BitmapImage bitmap = new BitmapImage(new Uri(uri));
 
                 list.Add(bitmap);
             }
@@ -56,6 +56,8 @@ namespace Laba5._1
             Horses.Clear();
             RaceCanvas.Children.Clear();
 
+            Brush[] colors = { Brushes.Red, Brushes.Blue, Brushes.Yellow, Brushes.Black, Brushes.Purple, Brushes.Orange, Brushes.Pink, Brushes.Brown };
+
             // Отримуємо доступну висоту
             double availableHeight = RaceCanvas.ActualHeight;
             if (availableHeight <= 0)
@@ -64,7 +66,7 @@ namespace Laba5._1
             }
 
             // Відступи зверху та знизу
-            double topMargin = 130;     
+            double topMargin = 130;
             double bottomMargin = 30;
             double usableHeight = availableHeight - topMargin - bottomMargin;
 
@@ -176,7 +178,7 @@ namespace Laba5._1
                         horse.CurrentFrame = 0;
                     }
 
-                    horse.Shape.Source =horse.Frames[horse.CurrentFrame];
+                    horse.Shape.Source = horse.Frames[horse.CurrentFrame];
 
                     Canvas.SetLeft(horse.Shape, horse.X);
 
@@ -284,9 +286,8 @@ namespace Laba5._1
                         break;
                 }
 
-                horse.Coefficient =Math.Round(horse.Coefficient, 2);
+                horse.Coefficient = Math.Round(horse.Coefficient, 2);
             }
         }
     }
 }
-
