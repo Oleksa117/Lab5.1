@@ -21,13 +21,30 @@ namespace Laba5._1
     /// </summary>
     public partial class MainWindow : Window
     {
+        // список усіх коней
+        public ObservableCollection<Horse> Horses { get; set; } = new ObservableCollection<Horse>();
+
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        // список усіх коней
-        public ObservableCollection<Horse> Horses { get; set; }
-            = new ObservableCollection<Horse>();
+
+        private void CreateHorses(int count)
+        {
+            Horses.Clear();
+
+            Brush[] colors = { Brushes.Red, Brushes.Blue, Brushes.Yellow, Brushes.Black };
+
+            for (int i = 0; i < count; i++)
+            {
+                Horse horse = new Horse($"Horse {i + 1}", colors[i]);
+
+                Horses.Add(horse);
+            }
+        }
     }
+   
 }
+
+
