@@ -180,7 +180,8 @@ namespace Laba5._1
 
                         BalanceText.Text = balance.ToString("0.00");
 
-                        MessageBox.Show( $"{winner.Name} переміг!\nВиграш: {winMoney:0.00}");
+                        MessageBox.Show($"{winner.Name} переміг!\nВиграш: {winMoney:0.00}");
+                        UpdateCoefficients();
                     }
 
                     break;
@@ -235,6 +236,29 @@ namespace Laba5._1
 
             BalanceText.Text = balance.ToString();
         }
-    }
 
+        private void UpdateCoefficients()
+        {
+            foreach (var horse in Horses)
+            {
+                switch (horse.Position)
+                {
+                    case 1:
+                        horse.Coefficient = Math.Max(1.2, horse.Coefficient - 0.3);
+                        break;
+
+                    case 2:
+                        horse.Coefficient += 0.1;
+                        break;
+
+                    default:
+                        horse.Coefficient += 0.3;
+                        break;
+                }
+
+                horse.Coefficient =Math.Round(horse.Coefficient, 2);
+            }
+        }
+    }
 }
+
