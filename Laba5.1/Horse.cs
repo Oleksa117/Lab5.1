@@ -5,6 +5,9 @@ namespace Laba5._1
 {
     public class Horse
     {
+        // генератор випадкових чисел
+        private static readonly Random random = new Random();
+
         // ім'я коня
         public string Name { get; private set; }
 
@@ -24,6 +27,10 @@ namespace Laba5._1
         {
             Name = name;
             Color = color;
+
+            // випадкова швидкість від 5 до 10
+            Speed = random.Next(5, 11);
         }
+
     }
 }
