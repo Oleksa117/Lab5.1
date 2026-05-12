@@ -66,6 +66,11 @@ namespace Laba5._1
                 // очікування завершення всіх потоків
                 await Task.WhenAll(tasks);
 
+                foreach (var horse in Horses)
+                {
+                    horse.X += horse.Acceleration;
+                }
+
                 await Task.Delay(50);
             }
         }
