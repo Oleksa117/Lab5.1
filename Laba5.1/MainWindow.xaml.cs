@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 
+
 namespace Laba5._1
 {
     /// <summary>
@@ -22,6 +23,23 @@ namespace Laba5._1
     /// </summary>
     public partial class MainWindow : Window
     {
+        private List<ImageSource> ReadHorseFrames()
+        {
+            List<ImageSource> list =
+                new List<ImageSource>();
+
+            for (int i = 0; i < 12; i++)
+            {
+                string uri =$"pack://application:,,,/Images/Horses/WithOutBorder_{i:0000}.png";
+
+                BitmapImage bitmap =new BitmapImage(new Uri(uri));
+
+                list.Add(bitmap);
+            }
+
+            return list;
+        }
+
         // список усіх коней
         public ObservableCollection<Horse> Horses { get; set; } = new ObservableCollection<Horse>();
         private double balance = 1000;
@@ -48,7 +66,7 @@ namespace Laba5._1
             }
 
             // Відступи зверху та знизу
-            double topMargin = 30;
+            double topMargin = 130;     
             double bottomMargin = 30;
             double usableHeight = availableHeight - topMargin - bottomMargin;
 
@@ -77,14 +95,16 @@ namespace Laba5._1
                 Horses.Add(horse);
 
                 // прямокутник який представляє коня
-                horse.Shape = new Rectangle
+                var frames = ReadHorseFrames();
+
+                horse.Frames = frames;
+
+                horse.Shape = new Image
                 {
-                    Width = 40,
-                    Height = 40,
-                    Fill = horse.Color,
-                    Stroke = Brushes.Black,
-                    StrokeThickness = 1,
-                    Tag = horse // Зберігаємо посилання на коня
+                    Width = 80,
+                    Height = 80,
+                    Source = frames[0],
+                    Tag = horse
                 };
                 // позиція коня на трасі
                 double yPosition = topMargin + i * step;
@@ -150,6 +170,16 @@ namespace Laba5._1
                 foreach (var horse in Horses)
                 {
                     horse.X += horse.Acceleration;
+
+                    horse.CurrentFrame++;
+
+                    if (horse.CurrentFrame >= horse.Frames.Count)
+                    {
+                        horse.CurrentFrame = 0;
+                    }
+
+                    horse.Shape.Source =horse.Frames[horse.CurrentFrame];
+
                     Canvas.SetLeft(horse.Shape, horse.X);
 
                     if (horse.X >= 950 && horse.FinishTime == TimeSpan.Zero)

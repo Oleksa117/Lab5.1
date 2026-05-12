@@ -3,6 +3,9 @@ using System.Windows.Media;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Windows.Shapes;
+using System.Windows.Controls;
+using System.Collections.Generic;
+using System.Windows.Media.Imaging;
 
 namespace Laba5._1
 {
@@ -13,9 +16,21 @@ namespace Laba5._1
         public string Name { get; private set; }
 
         public Brush Color { get; private set; }
-        public Rectangle Shape { get; set; }
+        public Image Shape { get; set; }
+        public int CurrentFrame { get; set; }
 
         public double Speed { get; private set; }
+
+        private List<ImageSource> frames;
+        public List<ImageSource> Frames
+        {
+            get => frames;
+            set
+            {
+                frames = value;
+                OnPropertyChanged(nameof(Frames));
+            }
+        }
 
         // позиція на трасі
         private double x;

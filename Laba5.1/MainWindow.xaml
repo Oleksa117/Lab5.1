@@ -44,6 +44,11 @@
 
             </ListBox>
 
+            <Button x:Name="StartButton"
+                    Content="СТАРТ"
+                    Height="40"
+                    Click="StartButton_Click"/>
+
             <TextBlock Text="Баланс:"
                        Margin="0 20 0 5"/>
 
@@ -72,11 +77,6 @@
                     Height="35"
                     Click="PlaceBet_Click"/>
 
-            <Button x:Name="StartButton"
-                    Content="СТАРТ"
-                    Height="40"
-                    Click="StartButton_Click"/>
-
         </StackPanel>
 
         <Border 
@@ -84,8 +84,12 @@
             Grid.Column="1"
             Margin="10"
             BorderThickness="3"
-            BorderBrush="Black"
-            Background="ForestGreen">
+            BorderBrush="Black">
+
+            <Border.Background>
+                <ImageBrush ImageSource="/Images/track.png" 
+                    Stretch="Fill"/>
+            </Border.Background>
 
             <ScrollViewer x:Name="RaceScrollViewer" 
                           VerticalScrollBarVisibility="Auto" 
