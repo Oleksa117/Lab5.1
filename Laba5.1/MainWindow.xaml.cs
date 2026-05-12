@@ -13,9 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
-using System.Linq;
-using System.Windows.Shapes;
+using System.Diagnostics;
 
 namespace Laba5._1
 {
@@ -30,14 +28,46 @@ namespace Laba5._1
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = this;
         }
 
 
         private void CreateHorses(int count)
         {
             Horses.Clear();
+            RaceCanvas.Children.Clear();
 
-            Brush[] colors = { Brushes.Red, Brushes.Blue, Brushes.Yellow, Brushes.Black };
+            Brush[] colors = { Brushes.Red, Brushes.Blue, Brushes.Yellow, Brushes.Black, Brushes.Purple, Brushes.Orange, Brushes.Pink, Brushes.Brown };
+
+            // Отримуємо доступну висоту
+            double availableHeight = RaceCanvas.ActualHeight;
+            if (availableHeight <= 0)
+            {
+                availableHeight = 400;
+            }
+
+            // Відступи зверху та знизу
+            double topMargin = 30;
+            double bottomMargin = 30;
+            double usableHeight = availableHeight - topMargin - bottomMargin;
+
+            // Розраховуємо крок між кіньми
+            double step = usableHeight / count;
+
+            // Обмежуємо мінімальний крок, щоб коні не накладалися
+            if (step < 45) step = 45;
+
+            // Якщо коней багато і вони не вміщаються, встановлюємо мінімальний крок
+            double totalNeededHeight = count * 45;
+            if (totalNeededHeight > usableHeight)
+            {
+                step = 45;
+                RaceCanvas.Height = topMargin + bottomMargin + totalNeededHeight;
+            }
+            else
+            {
+                RaceCanvas.Height = availableHeight;
+            }
 
             for (int i = 0; i < count; i++)
             {
@@ -46,18 +76,51 @@ namespace Laba5._1
                 Horses.Add(horse);
 
                 // прямокутник який представляє коня
-                Rectangle rect = new Rectangle
+                horse.Shape = new Rectangle
                 {
                     Width = 40,
                     Height = 40,
-                    Fill = horse.Color
+                    Fill = horse.Color,
+                    Stroke = Brushes.Black,
+                    StrokeThickness = 1,
+                    Tag = horse // Зберігаємо посилання на коня
                 };
-
                 // позиція коня на трасі
-                Canvas.SetLeft(rect, 0);
-                Canvas.SetTop(rect, 50 + i * 60);
+                double yPosition = topMargin + i * step;
 
-                RaceCanvas.Children.Add(rect);
+                Canvas.SetLeft(horse.Shape, 10);
+                Canvas.SetTop(horse.Shape, yPosition);
+
+                RaceCanvas.Children.Add(horse.Shape);
+            }
+
+            // Встановлюємо лінію фінішу
+            Canvas.SetLeft(FinishLine, 950);
+            Canvas.SetTop(FinishLine, 0);
+            FinishLine.Height = RaceCanvas.ActualHeight;
+
+            // Додаємо лінію фінішу, якщо її ще немає
+            if (!RaceCanvas.Children.Contains(FinishLine))
+            {
+                RaceCanvas.Children.Add(FinishLine);
+            }
+        }
+
+        private void HorseCountListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!IsLoaded) return;
+
+            int count = int.Parse(((ListBoxItem)HorseCountListBox.SelectedItem).Content.ToString());
+
+            double neededHeight = 30 + 30 + (count * 45); 
+
+            double minHeight = Math.Max(400, neededHeight);
+            RaceCanvas.MinHeight = minHeight;
+
+            // Оновлюємо висоту лінії фінішу
+            if (FinishLine != null)
+            {
+                FinishLine.Height = RaceCanvas.Height;
             }
         }
 
@@ -66,6 +129,8 @@ namespace Laba5._1
             int count = int.Parse(((ListBoxItem)HorseCountListBox.SelectedItem).Content.ToString());
 
             CreateHorses(count);
+            FinishLine.Height = RaceCanvas.ActualHeight;
+            Stopwatch stopwatch = Stopwatch.StartNew();
 
             // гонка триває поки всі не дійдуть до фінішу
             while (Horses.Any(h => h.X < 950))
@@ -84,6 +149,20 @@ namespace Laba5._1
                 foreach (var horse in Horses)
                 {
                     horse.X += horse.Acceleration;
+                    Canvas.SetLeft(horse.Shape, horse.X);
+
+                    if (horse.X >= 950 && horse.FinishTime == TimeSpan.Zero)
+                    {
+                        horse.FinishTime = stopwatch.Elapsed;
+                    }
+                }
+                var ordered = Horses
+                            .OrderBy(h => h.FinishTime)
+                            .ToList();
+
+                for (int i = 0; i < ordered.Count; i++)
+                {
+                    ordered[i].Position = i + 1;
                 }
 
                 await Task.Delay(50);
@@ -92,5 +171,3 @@ namespace Laba5._1
     }
 
 }
-
-

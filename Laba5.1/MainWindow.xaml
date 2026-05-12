@@ -3,7 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Horse Race"
         Height="700"
-        Width="1200">
+        Width="1200"
+        MinHeight="500">
 
     <Grid Background="LightGray">
 
@@ -30,7 +31,8 @@
 
             <ListBox x:Name="HorseCountListBox"
                      Height="100"
-                     Margin="0 10 0 20">
+                     Margin="0 10 0 20"
+                     SelectionChanged="HorseCountListBox_SelectionChanged">
                 
                 <ListBoxItem Content="2"/>
                 <ListBoxItem Content="3"/>
@@ -44,7 +46,8 @@
 
             <Button x:Name="StartButton"
                     Content="СТАРТ"
-                    Height="40"/>
+                    Height="40"
+                    Click="StartButton_Click"/>
 
         </StackPanel>
 
@@ -56,23 +59,38 @@
             BorderBrush="Black"
             Background="ForestGreen">
 
-            <Canvas x:Name="RaceCanvas">
+            <ScrollViewer x:Name="RaceScrollViewer" 
+                          VerticalScrollBarVisibility="Auto" 
+                          HorizontalScrollBarVisibility="Disabled">
+                <Canvas x:Name="RaceCanvas"
+                    Width="950"
+                    Height="{Binding ActualHeight, ElementName=RaceScrollViewer, Mode=OneWay}">
 
-            </Canvas>
-
+                    <!-- Додаємо лінію фінішу -->
+                    <Rectangle x:Name="FinishLine" 
+                               Width="5" 
+                               Fill="Yellow" 
+                               Opacity="0.8"/>
+                </Canvas>
+            </ScrollViewer>
         </Border>
 
         <DataGrid Grid.Row="1"
           Grid.ColumnSpan="2"
           Margin="10"
-          AutoGenerateColumns="False">
+          AutoGenerateColumns="False"
+          ItemsSource="{Binding Horses}">
+           
 
             <DataGrid.Columns>
 
-                <DataGridTextColumn Header="Позиція"/>
-                <DataGridTextColumn Header="Ім'я"/>
-                <DataGridTextColumn Header="X"/>
-                <DataGridTextColumn Header="Час"/>
+                <DataGridTextColumn Header="Ім'я"
+                                    Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="Позиція" 
+                                    Binding="{Binding Position}"/>
+                <DataGridTextColumn Header="Час"
+                                    Binding="{Binding FinishTime}"/>
+
 
             </DataGrid.Columns>
 
