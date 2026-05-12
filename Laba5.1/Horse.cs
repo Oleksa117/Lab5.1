@@ -47,6 +47,7 @@ namespace Laba5._1
             Color = color;
 
             Speed = random.Next(5, 11);
+            Coefficient = Math.Round(1 + random.NextDouble() * 4, 2);
         }
 
         // поточне прискорення
@@ -84,6 +85,30 @@ namespace Laba5._1
             {
                 position = value;
                 OnPropertyChanged(nameof(Position));
+            }
+        }
+
+        private double coefficient;
+
+        public double Coefficient
+        {
+            get => coefficient;
+            set
+            {
+                coefficient = value;
+                OnPropertyChanged(nameof(Coefficient));
+            }
+        }
+
+        private double bet;
+
+        public double Bet
+        {
+            get => bet;
+            set
+            {
+                bet = value;
+                OnPropertyChanged(nameof(Bet));
             }
         }
 

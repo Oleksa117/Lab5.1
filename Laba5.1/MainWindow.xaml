@@ -44,6 +44,15 @@
 
             </ListBox>
 
+            <TextBlock Text="Баланс:"
+                       Margin="0 20 0 5"/>
+
+            <TextBlock x:Name="BalanceText"
+                       Text="1000"
+                       FontSize="22"
+                       FontWeight="Bold"
+                       Foreground="DarkGreen"/> 
+
             <Button x:Name="StartButton"
                     Content="СТАРТ"
                     Height="40"
@@ -63,8 +72,8 @@
                           VerticalScrollBarVisibility="Auto" 
                           HorizontalScrollBarVisibility="Disabled">
                 <Canvas x:Name="RaceCanvas"
-                    Width="950"
-                    Height="{Binding ActualHeight, ElementName=RaceScrollViewer, Mode=OneWay}">
+                        Width="950"
+                        Height="{Binding ActualHeight, ElementName=RaceScrollViewer, Mode=OneWay}">
 
                     <!-- Додаємо лінію фінішу -->
                     <Rectangle x:Name="FinishLine" 
@@ -90,6 +99,10 @@
                                     Binding="{Binding Position}"/>
                 <DataGridTextColumn Header="Час"
                                     Binding="{Binding FinishTime}"/>
+                <DataGridTextColumn Header="Коефіцієнт"
+                                    Binding="{Binding Coefficient}"/>
+                <DataGridTextColumn Header="Ставка"
+                                    Binding="{Binding Bet}"/>
 
 
             </DataGrid.Columns>

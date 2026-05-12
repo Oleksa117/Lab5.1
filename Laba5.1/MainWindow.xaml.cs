@@ -24,6 +24,7 @@ namespace Laba5._1
     {
         // список усіх коней
         public ObservableCollection<Horse> Horses { get; set; } = new ObservableCollection<Horse>();
+        private double balance = 1000;
 
         public MainWindow()
         {
