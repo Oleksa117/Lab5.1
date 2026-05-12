@@ -17,6 +17,36 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-    </Grid>
+        <StackPanel Grid.Row="0"
+                    Grid.Column="0"
+                    Margin="10">
 
+            <TextBlock Text="Settings"
+                       FontSize="24"
+                       FontWeight="Bold"
+                       Margin="0 0 0 20"/>
+
+            <TextBlock Text="Кількість коней:"/>
+
+            <ListBox x:Name="HorseCountListBox"
+                     Height="100"
+                     Margin="0 10 0 20">
+                
+                <ListBoxItem Content="2"/>
+                <ListBoxItem Content="3"/>
+                <ListBoxItem Content="4"/>
+                <ListBoxItem Content="5"/>
+                <ListBoxItem Content="6"/>
+                <ListBoxItem Content="7"/>
+                <ListBoxItem Content="8"/>
+
+            </ListBox>
+
+            <Button x:Name="StartButton"
+                    Content="СТАРТ"
+                    Height="40"/>
+
+        </StackPanel>
+    </Grid>
+    
 </Window>
