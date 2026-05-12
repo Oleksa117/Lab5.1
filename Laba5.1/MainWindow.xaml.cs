@@ -113,7 +113,7 @@ namespace Laba5._1
 
             int count = int.Parse(((ListBoxItem)HorseCountListBox.SelectedItem).Content.ToString());
 
-            double neededHeight = 30 + 30 + (count * 45); 
+            double neededHeight = 30 + 30 + (count * 45);
 
             double minHeight = Math.Max(400, neededHeight);
             RaceCanvas.MinHeight = minHeight;
@@ -168,6 +168,52 @@ namespace Laba5._1
 
                 await Task.Delay(50);
             }
+        }
+
+        private void PlaceBet_Click(object sender, RoutedEventArgs e)
+        {
+            if (Horses.Count == 0)
+            {
+                MessageBox.Show("Спочатку створіть коней");
+                return;
+            }
+
+            if (!double.TryParse(BetTextBox.Text, out double bet))
+            {
+                MessageBox.Show("Невірна ставка");
+                return;
+            }
+
+            if (!int.TryParse(HorseNumberTextBox.Text, out int horseIndex))
+            {
+                MessageBox.Show("Невірний номер коня");
+                return;
+            }
+
+            horseIndex--;
+
+            if (horseIndex < 0 || horseIndex >= Horses.Count)
+            {
+                MessageBox.Show("Такого коня немає");
+                return;
+            }
+
+            if (bet > balance)
+            {
+                MessageBox.Show("Недостатньо грошей");
+                return;
+            }
+
+            foreach (var horse in Horses)
+            {
+                horse.Bet = 0;
+            }
+
+            Horses[horseIndex].Bet = bet;
+
+            balance -= bet;
+
+            BalanceText.Text = balance.ToString();
         }
     }
 
