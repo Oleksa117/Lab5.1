@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using System.Linq;
 
 namespace Laba5._1
 {
@@ -43,8 +45,32 @@ namespace Laba5._1
                 Horses.Add(horse);
             }
         }
+
+        private async void StartButton_Click(object sender, RoutedEventArgs e)
+        {
+            int count = int.Parse(((ListBoxItem)HorseCountListBox.SelectedItem).Content.ToString());
+
+            CreateHorses(count);
+
+            // гонка триває поки всі не дійдуть до фінішу
+            while (Horses.Any(h => h.X < 950))
+            {
+                List<Task> tasks = new List<Task>();
+
+                foreach (var horse in Horses)
+                {
+                    // запуск асинхронного прискорення
+                    tasks.Add(horse.ChangeAcceleration());
+                }
+
+                // очікування завершення всіх потоків
+                await Task.WhenAll(tasks);
+
+                await Task.Delay(50);
+            }
+        }
     }
-   
+
 }
 
 
