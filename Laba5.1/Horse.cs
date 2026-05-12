@@ -1,26 +1,22 @@
 ﻿using System;
 using System.Windows.Media;
+using System.Threading.Tasks;
 
 namespace Laba5._1
 {
     public class Horse
     {
-        // генератор випадкових чисел
         private static readonly Random random = new Random();
 
-        // ім'я коня
         public string Name { get; private set; }
 
-        // колір коня
         public Brush Color { get; private set; }
 
-        // базова швидкість
         public double Speed { get; private set; }
 
         // позиція на трасі
         public double X { get; set; }
 
-        // час фінішу
         public TimeSpan FinishTime { get; set; }
 
         public Horse(string name, Brush color)
@@ -28,9 +24,23 @@ namespace Laba5._1
             Name = name;
             Color = color;
 
-            // випадкова швидкість від 5 до 10
             Speed = random.Next(5, 11);
         }
 
+        // поточне прискорення
+        public double Acceleration { get; set; }
+
+        // асинхронна зміна прискорення
+        public async Task ChangeAcceleration()
+        {
+            await Task.Run(() =>
+            {
+                // випадкове число від 0.7 до 1
+                double value = 0.7 + random.NextDouble() * 0.3;
+
+                // розрахунок прискорення
+                Acceleration = Speed * value;
+            });
+        }
     }
 }
