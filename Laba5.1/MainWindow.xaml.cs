@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Collections.ObjectModel;
 
 namespace Laba5._1
 {
@@ -24,5 +25,9 @@ namespace Laba5._1
         {
             InitializeComponent();
         }
+
+        // список усіх коней
+        public ObservableCollection<Horse> Horses { get; set; }
+            = new ObservableCollection<Horse>();
     }
 }
