@@ -47,6 +47,21 @@
                     Height="40"/>
 
         </StackPanel>
+
+        <Border 
+            Grid.Row="0"
+            Grid.Column="1"
+            Margin="10"
+            BorderThickness="3"
+            BorderBrush="Black"
+            Background="ForestGreen">
+
+            <Canvas x:Name="RaceCanvas">
+
+            </Canvas>
+
+        </Border>
+
     </Grid>
     
 </Window>
